@@ -1,0 +1,65 @@
+# finance_calculators.py
+# This program allows the user to calculate investment interest
+# or monthly bond repayments.
+
+import math
+
+
+# Display menu
+print("Investment - to calculate the amount of interest you'll earn on your investment.")
+print("Bond       - to calculate the amount you'll have to pay on a home loan.\n")
+
+# Get user choice and make it lowercase for case-insensitive comparison
+user_choice = input("Enter either 'investment' or 'bond' from the menu above to proceed: ").lower()
+
+# ---------------- INVESTMENT CALCULATOR ----------------
+if user_choice == "investment":
+
+    print("\n--- Investment Calculator ---")
+
+    # Get investment details from user
+    deposit_amount = float(input("Enter the amount of money you are depositing: "))
+    interest_rate = float(input("Enter the interest rate (as a percentage, e.g. 8): "))
+    years = int(input("Enter the number of years you plan on investing: "))
+
+    # Convert percentage to decimal
+    r = interest_rate / 100
+
+    # Ask for interest type
+    interest_type = input("Do you want 'simple' or 'compound' interest? ").lower()
+
+    # Calculate based on interest type
+    if interest_type == "simple":
+        total_amount = deposit_amount * (1 + r * years)
+        print(f"\nTotal amount after {years} years (Simple Interest): R{total_amount:.2f}")
+
+    elif interest_type == "compound":
+        total_amount = deposit_amount * math.pow((1 + r), years)
+        print(f"\nTotal amount after {years} years (Compound Interest): R{total_amount:.2f}")
+
+    else:
+        print("\nInvalid interest type entered. Please restart the program.")
+
+
+# ---------------- BOND CALCULATOR ----------------
+elif user_choice == "bond":
+
+    print("\n--- Bond Repayment Calculator ---")
+
+    # Get bond details from user
+    present_value = float(input("Enter the present value of the house: "))
+    annual_interest_rate = float(input("Enter the annual interest rate (e.g. 7): "))
+    months = int(input("Enter the number of months you plan to repay the bond: "))
+
+    # Calculate monthly interest rate
+    i = (annual_interest_rate / 100) / 12
+
+    # Calculate monthly repayment
+    repayment = (i * present_value) / (1 - (1 + i) ** (-months))
+
+    print(f"\nYour monthly bond repayment will be: R{repayment:.2f}")
+
+
+# ---------------- INVALID INPUT ----------------
+else:
+    print("\nInvalid selection. Please restart the program and choose either 'investment' or 'bond'.")
